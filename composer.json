@@ -1,0 +1,26 @@
+{
+    "name": "ryp/tube",
+    "description": "ryp tube",
+	"version":"1.2.4",
+    "type":"library",
+    "license":"MIT",
+    "authors": [
+        {
+            "name": "ryp ecpei",
+            "email": "ryp@ecpei.com"
+        }
+    ],
+    "require": {
+        "php":">=7.0"
+    },
+    "autoload":{
+        "psr-4":{
+            "Ryp\\Tube\\":"src/"
+        }
+    },
+    "autoload-dev":{
+        "psr-4":{
+            "Ryp\\Tube\\":"src/"
+        }
+    }
+}
