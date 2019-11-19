@@ -19,6 +19,10 @@ trait RypCheckToken
         }
         //解析token
         $token = json_decode(base64_decode(explode('.', $tokenData->token)[0]), true);
+        //微信用户
+        if ($tokenData->identity_no == 1000) {
+            return $this->getWx($token['user_id']);
+        }
         //车主
         $mainData = $owner = (array)$this->identityInfo($token['identity_owner_id']);
         //车主详情

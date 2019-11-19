@@ -65,4 +65,34 @@ trait RypCheckTokenData
         return (object)collect($res)->except(['updated_at', 'deleted_at'])->toArray();
     }
     
+    /**
+     * 微信用户
+     * 身份信息，微信基本信息
+     */
+    public function getWx($user_id)
+    {
+        $wx = $this->findData('user_wechats', [
+            'id' => $user_id
+        ]);
+        if ($wx->status) {
+            throw new RypException('您微信账号已被封', 203);
+        }
+        $res = $this->findData('user_identity_info', [
+            'id' => $wx->identity_id,
+        ]);
+        $res->identity_id = $res->id;
+        $identityInfo = collect($res)->toArray();
+        $identityInfo['wx'] = collect($wx)->toArray();
+
+        if ($res->user_id) {
+            $identity_owner = $res = $this->findData('user_identity_info', [
+                'user_id' => $res->user_id,
+                'identity_no' => 1001,
+                'deleted_at' => null
+            ]);
+            $identity_owner->identity_id = $identity_owner->id;
+            $identityInfo['owner'] = collect($identity_owner)->toArray();
+        }
+        return $identityInfo;
+    }
 }
